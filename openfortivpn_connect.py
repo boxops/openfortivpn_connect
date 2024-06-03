@@ -21,6 +21,7 @@ port = 443
 username = 'myusername'
 password = 'mysecurepassword'
 totp_secret = 'mysecuretotpsecret'
+trusted_cert = 'abcdefghijklmnopqrstuvwxyz123456789abcdefghijklmnopqrstuvwxyz123'
 
 def get_totp(secret):
     """Generate TOTP using the provided secret."""
@@ -45,7 +46,7 @@ def status():
     result = subprocess.run(command, stdout=subprocess.PIPE)
     return bool(result.stdout)
 
-def generate_config_file(profile_name, host, port, username, password, totp_secret):
+def generate_config_file(profile_name, host, port, username, password, trusted_cert, totp_secret):
     """Generate a configuration file for the VPN."""
     totp = get_totp(totp_secret)
     lines = [
@@ -53,17 +54,17 @@ def generate_config_file(profile_name, host, port, username, password, totp_secr
         f"port = {port}",
         f"username = {username}",
         f"password = {password}{totp}",
-        f"trusted-cert = abcdefghijklmnopqrstuvwxyz123456789abcdefghijklmnopqrstuvwxyz123"
+        f"trusted-cert = {trusted_cert}"
     ]
     with open(profile_name, 'w') as f:
         f.write('\n'.join(lines))
 
-# generate_config_file(profile_name, host, port, username, password, totp_secret)
+# generate_config_file(profile_name, host, port, username, password, trusted_cert, totp_secret)
 # connect(profile_name)
 
 # Session drops after x hours, reconnect automatically
 while True:
     if not status():
-        generate_config_file(profile_name, username, password, totp_secret)
+        generate_config_file(profile_name, host, port, username, password, trusted_cert, totp_secret)
         connect(profile_name)
     time.sleep(60)
