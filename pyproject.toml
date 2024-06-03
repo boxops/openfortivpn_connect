@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "openfortivpn-connect"
+version = "0.1.0"
+description = "Use the openfortivpn terminal client to establish a VPN connection and keep it alive."
+authors = ["Balazs Olah"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyotp = "2.9.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
