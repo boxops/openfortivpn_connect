@@ -1,4 +1,4 @@
-# Openfortivpn Connect
+# OpenFortiVPN Connect
 
 ## Purpose
 
